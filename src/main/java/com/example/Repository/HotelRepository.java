@@ -42,7 +42,7 @@ public class HotelRepository {
      */
     public List<Hotel> findAll(){
 
-        String sql = "SELECT id, area_name, address, nearestStation, price, parking " +
+        String sql = "SELECT id, area_name, address, nearest_station, price, parking " +
                 "FROM hotels ORDER BY price";
 
         List<Hotel> hotelList = temp.query(sql, HOTEL_ROW_MAPPER);
@@ -57,7 +57,7 @@ public class HotelRepository {
      * @return ホテル情報
      */
     public Hotel findByPrice(Integer price){
-        String sql = "SELECT id, area_name, address, nearestStation, price, parking " +
+        String sql = "SELECT id, area_name, address, nearest_station, price, parking " +
                 "FROM hotels WHERE price <=:price";
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("price", price);
