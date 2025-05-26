@@ -8,25 +8,31 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * ホテルに関するサービスクラス.
+ */
 @Service
 @Transactional
 public class HotelService {
 
+    //hotelRepositoryのインスタンスをインジェクション（注入）します
     @Autowired
     private HotelRepository hotelRepository;
 
     /**
+     * 指定された値段以下のホテル情報を取得します.
      *
-     * @param price
-     * @return
+     * @param price ホテルの値段
+     * @return 該当するホテル情報
      */
     public Hotel findByPrice(Integer price){
         return hotelRepository.findByPrice(price);
     }
 
     /**
+     * すべてのホテル情報を値段順で取得します。
      *
-     * @return
+     * @return ホテルのリスト
      */
     public List<Hotel> findAll(){
         return hotelRepository.findAll();
