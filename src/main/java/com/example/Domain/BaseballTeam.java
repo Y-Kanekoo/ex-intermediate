@@ -1,6 +1,9 @@
 package com.example.Domain;
 
-public class BaseballTeams {
+/**
+ * 野球チームを表すドメインクラス.
+ */
+public class BaseballTeam {
     /**id*/
     private Integer id;
     /**リーグ名*/

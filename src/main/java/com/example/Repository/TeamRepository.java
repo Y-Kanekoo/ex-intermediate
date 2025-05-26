@@ -1,6 +1,6 @@
 package com.example.Repository;
 
-import com.example.Domain.BaseballTeams;
+import com.example.Domain.BaseballTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * BaseballTeamsの情報の取得の仕方の処理
+ * baseballteamsテーブルを操作するリポジトリ.
  */
 @Repository
 public class TeamRepository {
@@ -21,13 +21,13 @@ public class TeamRepository {
     private NamedParameterJdbcTemplate template;
 
 
-    /*
+    /**
     SQLから情報を取ってきて、Baseballクラスに一行一行セットする。
         ""の中はSQLのカラムと一致するように書く
     */
-    private static final RowMapper<BaseballTeams> BASEBALL_TEAMS_ROW_MAPPER
+    private static final RowMapper<BaseballTeam> BASEBALL_TEAMS_ROW_MAPPER
             = (rs, rowNum) -> {
-        BaseballTeams baseballTeams = new BaseballTeams();
+        BaseballTeam baseballTeams = new BaseballTeam();
         baseballTeams.setId(rs.getInt("id"));
         baseballTeams.setLeagueName(rs.getString("league_name"));
         baseballTeams.setTeamName(rs.getString("team_name"));
@@ -43,17 +43,19 @@ public class TeamRepository {
      * @param id id
      * @return チーム情報
      */
-    public BaseballTeams findById(Integer id){
+    public BaseballTeam findById(Integer id){
         String sql = "SELECT id, league_name, team_name, headquarters, inauguration, history " +
                 "FROM teams WHERE id =:id";
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 
-        try {
-            return template.queryForObject(sql, param, BASEBALL_TEAMS_ROW_MAPPER);
-        }catch (EmptyResultDataAccessException e){
-            return null;
-        }
+        return template.queryForObject(sql, param, BASEBALL_TEAMS_ROW_MAPPER);
+
+//        try {
+//            return template.queryForObject(sql, param, BASEBALL_TEAMS_ROW_MAPPER);
+//        }catch (EmptyResultDataAccessException e){
+//            return null;
+//        }
     }
 
     /**
@@ -61,12 +63,12 @@ public class TeamRepository {
      *
      * @return 球団リスト
      */
-    public List<BaseballTeams> findAllOrderByInauguration(){
+    public List<BaseballTeam> findAllOrderByInauguration(){
 
         String sql = "SELECT id, league_name, team_name, headquarters, inauguration, history " +
                 "FROM teams ORDER BY inauguration ASC";
 
-        List<BaseballTeams> baseballTeamsList = template.query(sql, BASEBALL_TEAMS_ROW_MAPPER);
+        List<BaseballTeam> baseballTeamsList = template.query(sql, BASEBALL_TEAMS_ROW_MAPPER);
 
         return baseballTeamsList;
     }

@@ -1,6 +1,6 @@
 package com.example.Service;
 
-import com.example.Domain.BaseballTeams;
+import com.example.Domain.BaseballTeam;
 import com.example.Repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class TeamService {
      * @param id 検索する球団のID
      * @return 該当する球団情報
      */
-    public BaseballTeams findById(Integer id){
+    public BaseballTeam findById(Integer id){
         return teamRepository.findById(id);
     }
 
@@ -35,7 +35,7 @@ public class TeamService {
      *
      * @return 球団のリスト
      */
-    public List<BaseballTeams> findAllOrderByInauguration(){
+    public List<BaseballTeam> findAllOrderByInauguration(){
         return teamRepository.findAllOrderByInauguration();
     }
 }
