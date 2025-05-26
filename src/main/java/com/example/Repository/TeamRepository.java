@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * BaseballTeamsの情報の取得の仕方の処理
+ */
 @Repository
 public class TeamRepository {
 
@@ -18,7 +21,8 @@ public class TeamRepository {
     private NamedParameterJdbcTemplate template;
 
 
-    /*SQLから情報を取ってきて、Baseballクラスに一行一行セットする。
+    /*
+    SQLから情報を取ってきて、Baseballクラスに一行一行セットする。
         ""の中はSQLのカラムと一致するように書く
     */
     private static final RowMapper<BaseballTeams> BASEBALL_TEAMS_ROW_MAPPER
@@ -40,13 +44,13 @@ public class TeamRepository {
      * @return チーム情報
      */
     public BaseballTeams findById(Integer id){
-        String sql = "SELECT id, league_name, team_name, headquarters, inauguration, history FROM teams WHERE id =:id";
+        String sql = "SELECT id, league_name, team_name, headquarters, inauguration, history " +
+                "FROM teams WHERE id =:id";
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 
         try {
-            BaseballTeams baseballTeams = template.queryForObject(sql, param, BASEBALL_TEAMS_ROW_MAPPER);
-            return baseballTeams;
+            return template.queryForObject(sql, param, BASEBALL_TEAMS_ROW_MAPPER);
         }catch (EmptyResultDataAccessException e){
             return null;
         }
