@@ -25,7 +25,7 @@ public class HotelService {
      * @param price ホテルの値段
      * @return 該当するホテル情報
      */
-    public Hotel findByPrice(Integer price){
+    public Hotel searchByLessThanPrice(Integer price){
         return hotelRepository.findByPrice(price);
     }
 
@@ -34,7 +34,7 @@ public class HotelService {
      *
      * @return ホテルのリスト
      */
-    public List<Hotel> findAll(){
+    public List<Hotel> searchAll(){
         return hotelRepository.findAll();
     }
 }
